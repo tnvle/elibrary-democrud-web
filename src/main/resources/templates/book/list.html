@@ -37,60 +37,69 @@
     <div style="padding-top:1em;" class="container">
         <div>
             <span style="font-size: 2em; color: #32a5e7;">Books in our Collection</span>
+             
+            <!-- <button type="submit" class="btn btn-default" onclick="location.href='/elibrary/book/search?title='+ document.getElementById('title').value"> Search</button> -->
+            <!-- <a class="btn btn-outline-success btn-lg" th:href="@{/elibrary/book/search(title=document.getElementById('title').value)}">Search</a> -->
             <span style="float:right;">
                 <a class="btn btn-outline-success btn-lg" href="/elibrary/book/new">Add New Book</a>
             </span>
         </div>
 
-        <p>&nbsp;</p>
-        <div style="font-size: 1em">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">ISBN</th>
-                    <th scope="col">Book Title</th>
-                    <th scope="col">Overdue Fee</th>
-                    <th scope="col">Publisher</th>
-                    <th scope="col">Date Published</th>
-                    <th scope="col">&nbsp;</th>
-                    <th scope="col">&nbsp;</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="book,iterStat : ${books}">
-                    <!--th:onclick="@{document.location='/elibrary/book/edit/{bookId}'(bookId=${book.bookId})}" -->
-                    <th scope="row" th:text="${iterStat.count}"></th>
-                    <td th:text="${book.isbn}"></td>
-                    <td th:text="${book.title}"></td>
-                    <td th:text="${book.overdueFee}"></td>
-                    <td th:text="${book.publisher}"></td>
-                    <td th:text="${book.datePublished}"></td>
-                    <td><a th:href="@{'/elibrary/book/edit/{bookId}'(bookId=${book.bookId})}">Edit</a></td>
-                    <td>
-                        <a data-toggle="modal" data-target="#confirmDeleteBookModal" th:href="@{'/elibrary/book/delete/' + ${book.bookId}}">Delete</a>
-<!--                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">-->
-<!--                            Launch demo modal-->
-<!--                        </button>-->
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!-- Pagination -->
-            <div>
-                <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#">Pages: </a>
-                    </li>
-                    <li th:each="i : ${#numbers.sequence(1, books.totalPages)}"
-                        th:class="${currentPageNo}==${i-1}?'page-item active':'page-item'">
-                        <a th:href="@{/elibrary/book/list(pageno=${i-1})}"
-                           th:text="${i}" class = "page-link"></a>
-                    </li>
-                </ul>
-            </div>
-
-        </div>
+		<form th:object="${book}" th:action="@{/elibrary/book/search}" method="get">
+			<span>Title</span>
+            <input type = "text" name = "title" th:value="${title}"/>
+            <input type="submit" value="Search"/>
+            
+	        <p>&nbsp;</p>
+	        <div style="font-size: 1em">
+	            <table class="table table-striped">
+	                <thead>
+	                <tr>
+	                    <th scope="col">#</th>
+	                    <th scope="col">ISBN</th>
+	                    <th scope="col">Book Title</th>
+	                    <th scope="col">Overdue Fee</th>
+	                    <th scope="col">Publisher</th>
+	                    <th scope="col">Date Published</th>
+	                    <th scope="col">&nbsp;</th>
+	                    <th scope="col">&nbsp;</th>
+	                </tr>
+	                </thead>
+	                <tbody>
+	                <tr th:each="book,iterStat : ${books}">
+	                    <!--th:onclick="@{document.location='/elibrary/book/edit/{bookId}'(bookId=${book.bookId})}" -->
+	                    <th scope="row" th:text="${iterStat.count}"></th>
+	                    <td th:text="${book.isbn}"></td>
+	                    <td th:text="${book.title}"></td>
+	                    <td th:text="${book.overdueFee}"></td>
+	                    <td th:text="${book.publisher}"></td>
+	                    <td th:text="${book.datePublished}"></td>
+	                    <td><a th:href="@{'/elibrary/book/edit/{bookId}'(bookId=${book.bookId})}">Edit</a></td>
+	                    <td>
+	                        <a data-toggle="modal" data-target="#confirmDeleteBookModal" th:href="@{'/elibrary/book/delete/' + ${book.bookId}}">Delete</a>
+	<!--                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">-->
+	<!--                            Launch demo modal-->
+	<!--                        </button>-->
+	                    </td>
+	                </tr>
+	                </tbody>
+	            </table>
+	            <!-- Pagination -->
+	            <div>
+	                <ul class="pagination">
+	                    <li class="page-item disabled">
+	                        <a class="page-link" href="#">Pages: </a>
+	                    </li>
+	                    <li th:each="i : ${#numbers.sequence(1, books.totalPages)}"
+	                        th:class="${currentPageNo}==${i-1}?'page-item active':'page-item'">
+	                        <a th:href="@{/elibrary/book/list(pageno=${i-1})}"
+	                           th:text="${i}" class = "page-link"></a>
+	                    </li>
+	                </ul>
+	            </div>
+	
+	        </div>
+        </form>
     </div>
 
 

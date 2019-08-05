@@ -32,6 +32,15 @@ public class BookServiceImpl implements BookService {
     public Page<Book> getAllBooksPaged(int pageNo) {
         return repository.findAll(PageRequest.of(pageNo, 3, Sort.by("title")));
     }
+    
+    @Override
+    public Page<Book> getAllBooksPagedByCriteria(int pageNo, String title) {
+//        return repository.findAll(PageRequest.of(pageNo, 2, Sort.by("title")));
+    	
+//    	return repository.findByTitle(title, PageRequest.of(pageNo, 2, Sort.by("title")));
+    	return repository.findBooksByCriteria(title, PageRequest.of(pageNo, 20, Sort.by("title")));
+    	
+    }
 
     @Override
     public Book saveBook(Book book) {

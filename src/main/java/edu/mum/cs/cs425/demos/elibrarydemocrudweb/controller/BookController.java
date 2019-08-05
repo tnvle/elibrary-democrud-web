@@ -30,6 +30,17 @@ public class BookController {
         modelAndView.setViewName("book/list");
         return modelAndView;
     }
+    
+//  @GetMapping(value = {"/elibrary/book/search"})
+  @GetMapping(value = {"/elibrary/book/search"})
+  public ModelAndView searchBooks(@RequestParam(defaultValue = "0") int pageno, @RequestParam("title") String title) {
+//  public ModelAndView searchBooks(@RequestParam(defaultValue = "0") int pageno, @PathVariable String title) {
+      ModelAndView modelAndView = new ModelAndView();
+      modelAndView.addObject("books", bookService.getAllBooksPagedByCriteria(pageno, title));
+      modelAndView.addObject("currentPageNo", pageno);
+      modelAndView.setViewName("book/list");
+      return modelAndView;
+  }
 
     @GetMapping(value = {"/elibrary/book/new"})
     public String displayNewBookForm(Model model) {

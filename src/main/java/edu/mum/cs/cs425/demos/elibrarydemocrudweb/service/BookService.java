@@ -13,5 +13,6 @@ public interface BookService {
     public abstract Book getBookById(Integer bookId);
     public abstract void deleteBookById(Integer bookId);
     public abstract Optional<Book> findByISBN(String isbn);
+    public abstract Page<Book> getAllBooksPagedByCriteria(int pageNo, String title);
 
 }
